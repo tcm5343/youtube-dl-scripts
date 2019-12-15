@@ -1,7 +1,6 @@
 import os
 
-# this script generates a new and up to date archive.log for your downloaded
-# youtube videos
+# this script generates a new and up to date archive.log for your downloaded youtube videos
 # author: @tcm5343
 
 # finds working directory
@@ -18,7 +17,5 @@ for subdir, dirs, files in os.walk(rootdir):
              index = file.rfind(" ")
              f.write("youtube ")
              # returns url hash and gets rid of file extension
-             # the reason this works is because videos are saved
-             # with the hash as the last part of the name
              f.write((file[index+1:]).split(".",1)[0] +"\n")
 f.close()
