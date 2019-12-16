@@ -12,7 +12,7 @@ f = open("archive.log", "w")
 for subdir, dirs, files in os.walk(rootdir):
     for file in files:
         filepath = subdir + os.sep + file
-		# edit possible file paths depending on your setup
+	# edit possible file paths depending on your setup
         if filepath.endswith(".mkv") or filepath.endswith(".webm"):
              # returns index of the last space before the url hash
              index = file.rfind(" ")
