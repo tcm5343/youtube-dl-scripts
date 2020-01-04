@@ -1,6 +1,4 @@
 import os, shutil
-from timeit import Timer
-
 
 # this script generates a new and up to date archive.log for your currently downloaded youtube videos
 # author: @tcm5343
@@ -35,13 +33,12 @@ def populateNewLog():
                  f.write("youtube ")
                  # returns url hash and gets rid of file extension
                  f.write((file[index+1:]).split(".",1)[0] +"\n")
-                 videoCount+1
     f.close()
 
-def displayResults(vCount):
+def displayResults():
     print("updateArchive.py has finished:")
-    print("Total Videos: \t" + str(vCount))
-    print("Total Time: \t" + str(vCount))
+    with open('archive.log') as my_file:
+        print("Total Videos: \t" + str(sum(1 for _ in my_file)))
 
 
 # finds working directory
@@ -50,9 +47,7 @@ rootdir = os.getcwd()
 backupDirectory = "/backupOfArchiveLogs"
 archiveCurrentLog(backupDirectory)
 
-videoCount = 0
 populateNewLog()
-
-displayResults(videoCount)
+displayResults()
 
 
