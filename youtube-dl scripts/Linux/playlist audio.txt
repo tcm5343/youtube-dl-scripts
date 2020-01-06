@@ -1,1 +1,1 @@
-youtube-dl --download-archive "archive.log" -i --match-filter "playlist_title != 'Liked videos' & playlist_title != 'Favorites'" -f bestaudio --merge-output-format mp3 -o "%cd%/%(playlist_uploader)s/%(playlist)s/%(playlist_index)s - %(title)s - %(id)s.%(ext)s" "[LINK]"
+youtube-dl --download-archive "archive.log" -i --match-filter "playlist_title != 'Liked videos' & playlist_title != 'Favorites'" -f bestaudio --merge-output-format mp3 -o "%(playlist_uploader)s/%(playlist)s/%(playlist_index)s - %(title)s - %(id)s.%(ext)s" "LINK"
