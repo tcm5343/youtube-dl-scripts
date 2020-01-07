@@ -64,9 +64,9 @@ elif len(sys.argv) == 2 and sys.argv[1] == "--help":
     # usage of this script
     print("\n" + sys.argv[0] + " is a command line tool to generate new and backup old archive.log files which are created using youtube-dl and are based on your current directory.\n")
     print("Usage:")
-    print("\tpython3 updateArchive.py\n\t\t- must be executed in the root directory of your youtube-dl videos and creates a backup in that directory.")
-    print("\tpython3 updateArchive.py <path of current archive.log>\n\t\t- Enter the path of your youtube-dl directory and the script will generate a new archive.log and backup the old logs there.")
-    print("\tpython3 updateArchive.py <path of current archive.log> <path for backup of old archive.log>\n\t\t- You must specify the root of your youtube-dl directory and where you would like to back your archive.log file up to.")
+    print("\tpython3 updateArchive.py\n\t\t- This is the default command, it must be executed in the root directory of your youtube-dl videos and creates a backup folder in that directory.")
+    print("\tpython3 updateArchive.py [path of current archive.log]\n\t\t- You must enter the path of your youtube-dl directory and the script will generate a new archive.log and backup the old logs there. This allows it to be executed anywhere aslong as you include the path.")
+    print("\tpython3 updateArchive.py [path of current archive.log] [path for backup of old archive.log]\n\t\t- You must specify the root of your youtube-dl directory and where you would like to back your archive.log file up to. This allows for the backup of the archive.log files to be store in a different directory.")
     sys.exit()
 
 # custom root and backup directories
