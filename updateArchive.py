@@ -82,6 +82,6 @@ elif len(sys.argv) == 3:
         print("Path is not valid or does not exist, please try again.")
 
 else:
-    print("Invalid arguments, use --help for more information\n")
+    print("Invalid arguments, see 'updateArchive.py --help'.")
     sys.exit()
 
