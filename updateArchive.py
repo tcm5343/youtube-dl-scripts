@@ -2,7 +2,7 @@
 
 import os, shutil, sys, getopt
 
-# this script generates a new and up to date archive.log for your currently downloaded youtube videos
+# a command line tool to generate new and backup old archive.log files which are created using youtube-dl and are based on your current directory
 # author: @tcm5343
 
 # function archives the current archive.log file in the directory
@@ -35,7 +35,7 @@ def populateNewLog():
     f.close()
 
 def displayResults():
-    print("updateArchive.py is finished:")
+    print(sys.argv[0] + " is finished:")
     with open('archive.log') as my_file:
         print("Total Videos: \t" + str(sum(1 for _ in my_file)))
 
@@ -52,11 +52,20 @@ if len(sys.argv) == 1:
     populateNewLog()
     displayResults()
 
+elif len(sys.argv) == 2 and os.path.isdir(sys.argv[1]):
+    rootdir = sys.argv[1]
+    backupdir = sys.argv[1] + "/backupOfArchiveLogs"
+    archiveCurrentLog()
+    populateNewLog()
+    displayResults()
+    sys.exit()
+
 elif len(sys.argv) == 2 and sys.argv[1] == "--help":
     # usage of this script
-    print(sys.argv[0] + " is a command line tool to generate new and backup old archive.log files which are created using youtube-dl.")
+    print("\n" + sys.argv[0] + " is a command line tool to generate new and backup old archive.log files which are created using youtube-dl and are based on your current directory.\n")
     print("Usage:")
     print("\tpython3 updateArchive.py\n\t\t- must be executed in the root directory of your youtube-dl videos and creates a backup in that directory.")
+    print("\tpython3 updateArchive.py <path of current archive.log>\n\t\t- Enter the path of your youtube-dl directory and the script will generate a new archive.log and backup the old logs there.")
     print("\tpython3 updateArchive.py <path of current archive.log> <path for backup of old archive.log>\n\t\t- You must specify the root of your youtube-dl directory and where you would like to back your archive.log file up to.")
     sys.exit()
 
@@ -64,8 +73,7 @@ elif len(sys.argv) == 2 and sys.argv[1] == "--help":
 elif len(sys.argv) == 3:
     if os.path.isdir(sys.argv[1]) and os.path.isdir(sys.argv[2]):
         rootdir = sys.argv[1]
-        backupdir = sys.argv[2] + "backupOfArchiveLogs"
-
+        backupdir = sys.argv[2] + "/backupOfArchiveLogs"
         archiveCurrentLog()
         populateNewLog()
         displayResults()
