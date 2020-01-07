@@ -16,18 +16,16 @@ def archiveCurrentLog(backupDir):
         # copies current archive.log into new directory
         source = rootdir + "/archive.log"
         destination = rootdir + backupDir +"/archive" + str(archiveCount) + ".log"
- 
         dest = shutil.copy2(source, destination)
 
 # function populates a new archive.log based on videos in the directory
 def populateNewLog():
     f = open("archive.log", "w")
-
     for subdir, dirs, files in os.walk(rootdir):
         for file in files:
             filepath = subdir + os.sep + file
 	        # edit possible file types depending on your setup
-            if filepath.endswith(".mkv") or filepath.endswith(".webm"):
+            if os.path.splitext(filepath)[1].endswith(tuple(ext)):
                  # returns index of the last space before the url hash
                  index = file.rfind(" ")
                  f.write("youtube ")
@@ -40,14 +38,14 @@ def displayResults():
     with open('archive.log') as my_file:
         print("Total Videos: \t" + str(sum(1 for _ in my_file)))
 
+# all file types possible by using youtube-dl
+ext = (".3gp" or ".aac" or ".flv" or ".m4a" or ".mp3" or ".mp4" or ".ogg" or ".wav" or ".webm")
 
 # finds working directory
 rootdir = os.getcwd()
 
 backupDirectory = "/backupOfArchiveLogs"
 archiveCurrentLog(backupDirectory)
-
 populateNewLog()
 displayResults()
-
 
