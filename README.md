@@ -7,6 +7,8 @@ This script a command line tool to generate new and backup old archive.log files
 This script ONLY works if you use the the naming conventions which u/Veloldo uses in his post (the same conventions I use in my scripts which are based off of his). Always keep a backup of your archive.log file before running this script for the first time even though it does generate one for you. Thanks.
 
 ## Usage
+`python3 updateArchive.py --help` - Returns the the following usage as an output to help properly use the tool.
+
 `python3 updateArchive.py` - This is the default command, it must be executed in the root directory of your youtube-dl videos and creates a backup folder in that directory.
 
 `python3 updateArchive.py [path of current archive.log]` - You must enter the path of your youtube-dl directory and the script will generate a new archive.log and backup the old logs there. This allows it to be executed anywhere aslong as you include the path.
