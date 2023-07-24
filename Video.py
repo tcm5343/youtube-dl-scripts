@@ -1,26 +1,48 @@
+from os import PathLike
 from string import Template
+from typing import Optional, Union
 
 import requests
 
 
 class Video:
-    status = None
-    youtube_id = None
-    file_path = None
+    _noembed_template = Template('https://noembed.com/embed?url=https://www.youtube.com/watch?v=$video_id')
 
-    def __init__(self, youtube_id, file_path):
+    status: Optional[str]
+    """
+    Status definitions:
+    200 Success: The video exists and is accessible
+    400 Bad Request: The video never existed, url is bad
+    401 Unauthorized: The video is not embeddable (however, the video is accessible)
+    403 Forbidden: The video has been made private
+    404 Not Found: The video has been deleted
+    """
+    youtube_id: str
+    file_path: Union[str, PathLike]
+    noembed_url: str
+
+    def __init__(self, youtube_id: str, file_path: Union[str, PathLike]):
         self.youtube_id = youtube_id
         self.file_path = file_path
+        self.noembed_url = self._noembed_template.substitute(video_id=youtube_id)
+        self.status = None
 
-    def set_status(self) -> None:
-        url_template = Template('https://noembed.com/embed?url=https://www.youtube.com/watch?v=$video_id')
+    def fetch_status(self) -> str:
+        """
+        Sends a request to noembed.com to determine current status of the video.
+        :return: Video status
+        """
         try:
             res = requests.get(
-                url=url_template.substitute(video_id=self.youtube_id),
+                url=self._noembed_template.substitute(video_id=self.youtube_id),
                 headers={'User-Agent': 'My User Agent 1.0', }
             )
-        except Exception as err:  # todo: refine expected exceptions
+        except Exception as err:  # todo: refine error handling
             print(err)
-        else:
-            self.status = res.json().get('error', '200 Success')
-            # print(f'{self.status}: {self.youtube_id}')
+            res = requests.get(
+                url=self._noembed_template.substitute(video_id=self.youtube_id),
+                headers={'User-Agent': 'My User Agent 1.0', }
+            )
+
+        self.status = res.json().get('error', '200 Success')
+        return self.status
